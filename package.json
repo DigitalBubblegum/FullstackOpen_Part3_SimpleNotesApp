@@ -10,12 +10,12 @@
     "build:ui": "rm -rf build && cd F:/FullstackOpen/part2/notes && npm run build && cp -r build F:/FullstackOpen_Part3_SimpleNotesApp",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
   },
-
   "author": "",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^7.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
