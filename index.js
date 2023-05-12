@@ -1,24 +1,8 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require("cors");
-const mongoose = require('mongoose')
-//DO NOT SAVE YOUR PASSWORD TO GITHUB
-const password = process.argv[2];
-const url = `mongodb+srv://ghoshaldiwakar:${password}@learningcluster0.yrx0i94.mongodb.net/noteApp?retryWrites=true&w=majority`;
-mongoose.set('strictQuery',false)
-mongoose.connect(url)
-const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean,
-})
-noteSchema.set("toJSON", {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString();
-    delete returnedObject._id;
-    delete returnedObject.__v;
-  },
-});
-const Note = mongoose.model('Note',noteSchema)
+const Note = require("./models/note");
 app.use(cors());
 app.use(express.json())
 app.use(express.static("build"));
@@ -90,7 +74,7 @@ app.delete('/api/notes/:id',(request,response)=>{
   response.status(204).end()
   console.log('deleted');
 })
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
