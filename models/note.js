@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 //DO NOT SAVE YOUR PASSWORD TO GITHUB
-const password = process.argv[2];
 const url = process.env.MONGODB_URI;
 console.log("connecting to", url);
 
