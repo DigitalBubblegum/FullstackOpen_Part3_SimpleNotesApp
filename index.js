@@ -27,7 +27,7 @@ const generateId = () => {
   const maxId = notes.length > 0 ? Math.max(...notes.map((n) => n.id)) : 0;
   return maxId + 1;
 };
-
+//add notes to DB
 app.post("/api/notes", (request, response) => {
   const body = request.body;
 
@@ -47,18 +47,21 @@ app.post("/api/notes", (request, response) => {
    console.log('saved note to db');
   })
 });
-
+//testing api 
 app.get('/',(request,response)=>{
   response.send('<h1>hello world</h1>')
 })
+//testing api 2
 app.get("/new", (request, response) => {
   response.send("<h1>hello new</h1>");
 });
+//get all from DB
 app.get('/api/notes',(request,response) => {
   Note.find({}).then((notes) => {
     response.json(notes);
   });
 })
+//get by ID
 app.get("/api/notes/:id", (request, response) => {
   Note.findById(request.params.id)
     .then((note) => {
@@ -74,6 +77,7 @@ app.get("/api/notes/:id", (request, response) => {
     });
   
 });
+//delete from DB
 app.delete('/api/notes/:id',(request,response)=>{
   const id = Number(request.params.id)
   notes.filter(note=>note.id!=id)
