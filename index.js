@@ -71,10 +71,13 @@ app.get("/api/notes/:id", (request, response,next) => {
 });
 //delete from DB
 app.delete('/api/notes/:id',(request,response)=>{
-  const id = Number(request.params.id)
-  notes.filter(note=>note.id!=id)
-  response.status(204).end()
-  console.log('deleted');
+  Note.findByIdAndRemove(request.params.id)
+  .then(result => {
+    console.log("deleted");
+    response.status(204).end()
+  })
+  .catch(error => next(error))
+  
 })
 app.use(unknownEndpoint)
 app.use(errorHandler)
