@@ -79,6 +79,20 @@ app.delete('/api/notes/:id',(request,response)=>{
   .catch(error => next(error))
   
 })
+//updating the value of importance of note in DB
+app.put('/api/notes/:id',(request, response)=>{
+  const body = request.body;
+  const note = {
+    content: body.content,
+    important: body.important,
+  };
+  Note.findByIdAndUpdate(request.params.id,note,{new: true})
+  .then(updatedNote=>{
+    console.log('modified');
+    response.json(updatedNote)
+  })
+  .catch(error => next(error))
+})
 app.use(unknownEndpoint)
 app.use(errorHandler)
 const PORT = process.env.PORT;
