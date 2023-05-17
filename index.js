@@ -8,6 +8,9 @@ const errorHandler = (error, request, response, next) => {
   if(error.name === 'CastError'){
     return response.status(400).send({error:'malformatted id'})
   }
+  else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
+  }
   next(error)  
 }
 const unknownEndpoint = (request,response) => {
@@ -23,7 +26,7 @@ const generateId = () => {
   return maxId + 1;
 };
 //add notes to DB
-app.post("/api/notes", (request, response) => {
+app.post("/api/notes", (request, response,next) => {
   const body = request.body;
 
   if (body.content===undefined) {
@@ -41,6 +44,7 @@ app.post("/api/notes", (request, response) => {
    response.json(savedNote);
    console.log('saved note to db');
   })
+  .catch(error=>next(error))
 });
 //testing api 
 app.get('/',(request,response)=>{
@@ -80,18 +84,18 @@ app.delete('/api/notes/:id',(request,response)=>{
   
 })
 //updating the value of importance of note in DB
-app.put('/api/notes/:id',(request, response)=>{
-  const body = request.body;
-  const note = {
-    content: body.content,
-    important: body.important,
-  };
-  Note.findByIdAndUpdate(request.params.id,note,{new: true})
-  .then(updatedNote=>{
-    console.log('modified');
-    response.json(updatedNote)
-  })
-  .catch(error => next(error))
+app.put('/api/notes/:id',(request, response,next)=>{
+  const { content, important } = request.body;
+ Note.findByIdAndUpdate(
+   request.params.id,
+   { content, important },
+   { new: true, runValidators: true, context: "query" }
+ )
+   .then((updatedNote) => {
+     console.log("modified");
+     response.json(updatedNote);
+   })
+   .catch((error) => next(error));
 })
 app.use(unknownEndpoint)
 app.use(errorHandler)
