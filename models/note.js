@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const config = require('F:/FullstackOpen_Part3_SimpleNotesApp/utils/config.js')
+const config = require('../utils/config')
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
 //DO NOT SAVE YOUR PASSWORD TO GITHUB
