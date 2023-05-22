@@ -1,5 +1,5 @@
 const notesRouter = require('express').Router()
-const Note = require('./models/note')
+const Note = require('../models/note')
 
 //add notes to DB
 notesRouter.post('/', (request, response, next) => {
