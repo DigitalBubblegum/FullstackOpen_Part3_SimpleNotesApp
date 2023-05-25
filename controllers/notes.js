@@ -25,10 +25,10 @@ notesRouter.post('/', (request, response, next) => {
 		.catch((error) => next(error))
 })
 //get all from DB
-notesRouter.get('/', (_request, response) => {
+notesRouter.get('/', (request, response,next) => {
 	Note.find({}).then((notes) => {
 		response.json(notes)
-	})
+	}).catch(error => next(error))
 })
 //get by ID
 notesRouter.get('/:id', (request, response, next) => {
