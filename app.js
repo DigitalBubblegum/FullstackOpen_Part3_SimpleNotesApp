@@ -9,11 +9,10 @@ const mongoose = require('mongoose')
 
 mongoose.set('strictQuery', false)
 //DO NOT SAVE YOUR PASSWORD TO GITHUB
-const url = process.env.MONGODB_URI
 logger.info('connecting to', config.MONGODB_URI)
 
 mongoose
-	.connect(url)
+	.connect(config.MONGODB_URI)
 	.then(() => {
 		logger.info('connected to MongoDB')
 	})
