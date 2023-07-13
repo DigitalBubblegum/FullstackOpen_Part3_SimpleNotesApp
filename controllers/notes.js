@@ -25,10 +25,9 @@ notesRouter.post('/', (request, response, next) => {
 		.catch((error) => next(error))
 })
 //get all from DB
-notesRouter.get('/', (request, response,next) => {
-	Note.find({}).then((notes) => {
-		response.json(notes)
-	}).catch(error => next(error))
+notesRouter.get('/', async (request, response) => {
+	const notes = await Note.find({})
+	response.json(notes)
 })
 //get by ID
 notesRouter.get('/:id', (request, response, next) => {
