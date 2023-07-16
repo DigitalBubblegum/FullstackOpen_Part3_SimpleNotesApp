@@ -19,7 +19,7 @@ notesRouter.post('/', (request, response, next) => {
 	note
 		.save()
 		.then((savedNote) => {
-			response.json(savedNote)
+			response.status(201).json(savedNote)
 			console.log('saved note to db')
 		})
 		.catch((error) => next(error))
