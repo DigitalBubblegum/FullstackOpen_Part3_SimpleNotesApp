@@ -55,7 +55,7 @@ test('a valid note can be added', 	async () => {
 	expect(response.body).toHaveLength(initialNotes.length + 1)
 	expect(contents).toContain('async/await simplifies making async calls')
 })
-test('note without content is not added',async () =>{
+test('note without content is not added',async () => {
 	const newNote = {
 		important:true
 	}
