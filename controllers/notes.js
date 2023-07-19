@@ -2,7 +2,7 @@ const notesRouter = require('express').Router()
 const Note = require('../models/note')
 
 //add notes to DB
-notesRouter.post('/', (request, response, next) => {
+notesRouter.post('/', async (request, response, next) => {
 	const body = request.body
 
 	if (body.content === undefined) {
@@ -15,14 +15,12 @@ notesRouter.post('/', (request, response, next) => {
 		content: body.content,
 		important: body.important || false,
 	})
-
-	note
-		.save()
-		.then((savedNote) => {
-			response.status(201).json(savedNote)
-			console.log('saved note to db')
-		})
-		.catch((error) => next(error))
+	try {
+		const savedNote = await note.save()
+		response.status(201).json(savedNote)
+	} catch (exception ){
+		next(exception)
+	}
 })
 //get all from DB
 notesRouter.get('/', async (request, response) => {
