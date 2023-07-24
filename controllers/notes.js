@@ -2,7 +2,7 @@ const notesRouter = require('express').Router()
 const Note = require('../models/note')
 
 //add notes to DB
-notesRouter.post('/', async (request, response, next) => {
+notesRouter.post('/', async (request, response) => {
 	const body = request.body
 
 	if (body.content === undefined) {
