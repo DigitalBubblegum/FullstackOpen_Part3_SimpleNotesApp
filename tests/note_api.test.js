@@ -4,7 +4,6 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const Note = require('../models/note')
-const note = require('../models/note')
 beforeEach(async () => {
 	await Note.deleteMany({})
 	let noteObject = new Note(helper.initialNotes[0])
