@@ -8,11 +8,11 @@ beforeEach(async () => {
 	await Note.deleteMany({})
 	console.log('cleared')
 	helper.initialNotes.forEach(async (note) => {
-    let noteObject = new Note(note)
-    await noteObject.save()
-    console.log('saved')
-  })
-  console.log('done')
+		let noteObject = new Note(note)
+		await noteObject.save()
+		console.log('saved')
+	})
+	console.log('done')
 }, 100000)
 test('notes are returned as json',async () => {
 	await api
