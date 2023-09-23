@@ -110,7 +110,6 @@ describe('deletion of a note', () => {
 		expect(contents).not.toContain(noteToDelete.content)
 	})
 })
-
 afterAll(async () => {
 	await mongoose.connection.close()
 })
