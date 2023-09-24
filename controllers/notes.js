@@ -1,9 +1,12 @@
 const notesRouter = require('express').Router()
 const Note = require('../models/note')
+const User = require('../models/user')
 
 //add notes to DB
 notesRouter.post('/', async (request, response) => {
 	const body = request.body
+	const user = await User.findById(body.user)
+	console.log('nononono', user)
 
 	if (body.content === undefined) {
 		return response.status(400).json({
@@ -13,9 +16,12 @@ notesRouter.post('/', async (request, response) => {
 
 	const note = new Note({
 		content: body.content,
-		important: body.important || false,
+		important: body.important === undefined ? false : body.important,
+		user: user.id
 	})
 	const savedNote = await note.save()
+	user.notes = user.notes.concat(savedNote._id)
+	await user.save()
 	response.status(201).json(savedNote)
 })
 //get all from DB
