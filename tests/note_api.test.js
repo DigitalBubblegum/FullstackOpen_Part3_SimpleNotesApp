@@ -121,6 +121,13 @@ describe('when there is initially one user in db', () => {
 		await user.save()
 	},100000)
 
+	test('fetch all the contents of the user db',async() => {
+		// const usersAtStart = helper.usersInDb()
+		await api.get('/api/users')
+			.expect(200)
+			.expect('Content-Type', /application\/json/)
+	})
+
 	test('creation succeeds with a fresh username', async () => {
 		const usersAtStart = await helper.usersInDb()
 
